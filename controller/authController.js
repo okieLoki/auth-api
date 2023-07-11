@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 
 const register = async (req, res) => {
     try {
-        const { firstname, lastname, email, password } = req.body;
+        const { firstname, email, password } = req.body;
 
         if (!email || !password || !firstname) {
             return res.status(400).json({
@@ -72,7 +72,12 @@ const login = async (req, res) => {
             user.token = token
             user.password = undefined
 
-            res.status(200).json(user)
+            const options = {
+                expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+                httpOnly: true,
+            }
+
+            res.status(200).cookie('token', token, options).json(user)
         }
         res.status(400).json({
             status: 'Email or status is incorrect'

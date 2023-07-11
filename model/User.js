@@ -6,10 +6,6 @@ const userSchema = new Schema({
         type: String,
         required: [true, 'First Name missing']
     },
-    lastname: {
-        type: String,
-        default: null
-    },
     email: {
         type: String,
         unique: true,
